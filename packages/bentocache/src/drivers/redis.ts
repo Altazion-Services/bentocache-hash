@@ -81,6 +81,22 @@ export class RedisDriver extends BaseDriver implements L2CacheDriver {
   }
 
   /**
+   * Get a hash field value from the cache by key and field name
+   */
+  async hget(key: string, field: string) {
+    const result = await this.#connection.hget(this.getItemKey(key), field)
+    return result ?? undefined
+  }
+
+  /**
+   * Get all hash fields and values from the cache by key
+   */
+  async hgetall(key: string) {
+    const result = await this.#connection.hgetall(this.getItemKey(key))
+    return result ?? undefined
+  }
+
+  /**
    * Get the value of a key and delete it
    *
    * Returns the value if the key exists, undefined otherwise
